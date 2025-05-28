@@ -547,42 +547,43 @@
         return crypto.randomUUID();
     }
 
-    async function startNewConversation() {
+    function startNewConversation() {
+        // Generate session ID but don't make an API call yet
         currentSessionId = generateUUID();
-        const data = [{
-            action: "loadPreviousSession",
-            sessionId: currentSessionId,
-            route: config.webhook.route,
-            metadata: {
-                userId: ""
-            }
-        }];
-
-        try {
-            const response = await fetch(config.webhook.url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            const responseData = await response.json();
-            chatContainer.querySelector('.brand-header').style.display = 'none';
-            chatContainer.querySelector('.new-conversation').style.display = 'none';
-            chatInterface.classList.add('active');
-
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'chat-message bot';
-            botMessageDiv.textContent = Array.isArray(responseData) ? responseData[0].output : responseData.output;
-            messagesContainer.appendChild(botMessageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        // Transition to the chat interface without an API call
+        chatContainer.querySelector('.brand-header').style.display = 'none';
+        chatContainer.querySelector('.new-conversation').style.display = 'none';
+        chatInterface.classList.add('active');
     }
 
     async function sendMessage(message) {
+        // If this is the first message, initialize the session
+        if (!messagesContainer.hasChildNodes()) {
+            const initialData = [{
+                action: "loadPreviousSession",
+                sessionId: currentSessionId,
+                route: config.webhook.route,
+                metadata: {
+                    userId: ""
+                }
+            }];
+
+            try {
+                const response = await fetch(config.webhook.url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(initialData)
+                });
+                const responseData = await response.json();
+                // Do not display the initial response to avoid the white bubble
+            } catch (error) {
+                console.error('Error during initial session load:', error);
+            }
+        }
+
+        // Send the user's message
         const messageData = {
             action: "sendMessage",
             sessionId: currentSessionId,
