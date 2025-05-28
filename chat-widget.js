@@ -1,3 +1,4 @@
+// Chat Widget Script
 (function() {
     // Create and inject styles
     const styles = `
@@ -11,13 +12,12 @@
 
         .n8n-chat-widget .chat-container {
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             right: 20px;
             z-index: 1000;
             display: none;
-            width: min(90vw, 380px);
-            height: min(80vh, 600px);
-            max-height: calc(100vh - 100px);
+            width: 380px;
+            height: 600px;
             background: var(--chat--color-background);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(133, 79, 255, 0.15);
@@ -37,33 +37,29 @@
         }
 
         .n8n-chat-widget .brand-header {
-            padding: 12px;
-            display: none; /* Initially hidden */
+            padding: 16px;
+            display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             border-bottom: 1px solid rgba(133, 79, 255, 0.1);
             position: relative;
         }
 
-        .n8n-chat-widget .brand-header.active {
-            display: flex;
-        }
-
         .n8n-chat-widget .close-button {
             position: absolute;
-            right: 12px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             color: var(--chat--color-font);
             cursor: pointer;
-            padding: 6px;
+            padding: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: color 0.2s;
-            font-size: 18px;
+            font-size: 20px;
             opacity: 0.6;
         }
 
@@ -72,12 +68,12 @@
         }
 
         .n8n-chat-widget .brand-header img {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
         }
 
         .n8n-chat-widget .brand-header span {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             color: var(--chat--color-font);
         }
@@ -87,17 +83,17 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 16px;
+            padding: 20px;
             text-align: center;
             width: 100%;
-            max-width: 280px;
+            max-width: 300px;
         }
 
         .n8n-chat-widget .welcome-text {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 600;
             color: var(--chat--color-font);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             line-height: 1.3;
         }
 
@@ -107,17 +103,17 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            padding: 12px 20px;
+            padding: 16px 24px;
             background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             transition: transform 0.3s;
             font-weight: 500;
             font-family: inherit;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .n8n-chat-widget .new-chat-btn:hover {
@@ -125,12 +121,12 @@
         }
 
         .n8n-chat-widget .message-icon {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
         }
 
         .n8n-chat-widget .response-text {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--chat--color-font);
             opacity: 0.7;
             margin: 0;
@@ -149,20 +145,20 @@
         .n8n-chat-widget .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 20px;
             background: var(--chat--color-background);
             display: flex;
             flex-direction: column;
         }
 
         .n8n-chat-widget .chat-message {
-            padding: 10px 14px;
-            margin: 6px 0;
-            border-radius: 10px;
-            max-width: 85%;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 12px;
+            max-width: 80%;
             word-wrap: break-word;
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .n8n-chat-widget .chat-message.user {
@@ -182,7 +178,7 @@
         }
 
         .n8n-chat-widget .chat-input {
-            padding: 12px;
+            padding: 16px;
             background: var(--chat--color-background);
             border-top: 1px solid rgba(133, 79, 255, 0.1);
             display: flex;
@@ -191,17 +187,14 @@
 
         .n8n-chat-widget .chat-input textarea {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid rgba(133, 79, 255, 0.2);
             border-radius: 8px;
             background: var(--chat--color-background);
             color: var(--chat--color-font);
             resize: none;
             font-family: inherit;
-            font-size: 13px;
-            min-height: 40px;
-            max-height: 100px;
-            overflow-y: auto;
+            font-size: 14px;
         }
 
         .n8n-chat-widget .chat-input textarea::placeholder {
@@ -214,12 +207,11 @@
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 0 16px;
+            padding: 0 20px;
             cursor: pointer;
             transition: transform 0.2s;
             font-family: inherit;
             font-weight: 500;
-            font-size: 13px;
         }
 
         .n8n-chat-widget .chat-input button:hover {
@@ -230,9 +222,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
             background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             color: white;
             border: none;
@@ -255,123 +247,29 @@
         }
 
         .n8n-chat-widget .chat-toggle svg {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             fill: currentColor;
         }
 
-        @media screen and (max-width: 768px) {
-            .n8n-chat-widget .chat-container {
-                width: 90vw;
-                height: 70vh;
-                max-height: calc(100vh - 80px);
-                bottom: 70px;
-            }
-
-            .n8n-chat-widget .chat-container.position-left,
-            .n8n-chat-widget .chat-container {
-                right: 10px;
-                left: 10px;
-            }
-
-            .n8n-chat-widget .chat-toggle {
-                width: 50px;
-                height: 50px;
-                bottom: 15px;
-            }
-
-            .n8n-chat-widget .chat-toggle.position-left,
-            .n8n-chat-widget .chat-toggle {
-                right: 15px;
-                left: 15px;
-            }
-
-            .n8n-chat-widget .brand-header {
-                padding: 10px;
-            }
-
-            .n8n-chat-widget .brand-header img {
-                width: 24px;
-                height: 24px;
-            }
-
-            .n8n-chat-widget .brand-header span {
-                font-size: 14px;
-            }
-
-            .n8n-chat-widget .close-button {
-                font-size: 16px;
-                padding: 5px;
-            }
-
-            .n8n-chat-widget .new-conversation {
-                padding: 12px;
-                max-width: 90%;
-            }
-
-            .n8n-chat-widget .welcome-text {
-                font-size: 18px;
-                margin-bottom: 16px;
-            }
-
-            .n8n-chat-widget .new-chat-btn {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-
-            .n8n-chat-widget .message-icon {
-                width: 16px;
-                height: 16px;
-            }
-
-            .n8n-chat-widget .response-text {
-                font-size: 12px;
-            }
-
-            .n8n-chat-widget .chat-messages {
-                padding: 12px;
-            }
-
-            .n8n-chat-widget .chat-message {
-                font-size: 12px;
-                padding: 8px 12px;
-                margin: 5px 0;
-            }
-
-            .n8n-chat-widget .chat-input {
-                padding: 10px;
-            }
-
-            .n8n-chat-widget .chat-input textarea {
-                font-size: 12px;
-                min-height: 36px;
-                max-height: 80px;
-            }
-
-            .n8n-chat-widget .chat-input button {
-                padding: 0 14px;
-                font-size: 12px;
-            }
+        .n8n-chat-widget .chat-footer {
+            padding: 8px;
+            text-align: center;
+            background: var(--chat--color-background);
+            border-top: 1px solid rgba(133, 79, 255, 0.1);
         }
 
-        @media screen and (max-width: 480px) {
-            .n8n-chat-widget .chat-container {
-                width: 95vw;
-                height: 65vh;
-                max-height: calc(100vh - 70px);
-                bottom: 65px;
-            }
+        .n8n-chat-widget .chat-footer a {
+            color: var(--chat--color-primary);
+            text-decoration: none;
+            font-size: 12px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            font-family: inherit;
+        }
 
-            .n8n-chat-widget .chat-toggle {
-                width: 48px;
-                height: 48px;
-                bottom: 10px;
-            }
-
-            .n8n-chat-widget .chat-toggle svg {
-                width: 20px;
-                height: 20px;
-            }
+        .n8n-chat-widget .chat-footer a:hover {
+            opacity: 1;
         }
     `;
 
@@ -436,7 +334,7 @@
     widgetContainer.style.setProperty('--n8n-chat-font-color', config.style.fontColor);
 
     const chatContainer = document.createElement('div');
-    chatContainer.className = `chat-container ${config.style.position === 'left' ? 'position-left' : ''}`;
+    chatContainer.className = `chat-container${config.style.position === 'left' ? ' position-left' : ''}`;
     
     const newConversationHTML = `
         <div class="brand-header">
@@ -474,7 +372,7 @@
     chatContainer.innerHTML = newConversationHTML + chatInterfaceHTML;
     
     const toggleButton = document.createElement('button');
-    toggleButton.className = `chat-toggle ${config.style.position === 'left' ? 'position-left' : ''}`;
+    toggleButton.className = `chat-toggle${config.style.position === 'left' ? ' position-left' : ''}`;
     toggleButton.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.476 0-2.886-.313-4.156-.878l-3.156.586.586-3.156A7.962 7.962 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
@@ -515,9 +413,8 @@
             });
 
             const responseData = await response.json();
+            chatContainer.querySelector('.brand-header').style.display = 'none';
             chatContainer.querySelector('.new-conversation').style.display = 'none';
-            const brandHeaders = chatContainer.querySelectorAll('.brand-header');
-            brandHeaders.forEach(header => header.classList.add('active')); // Show both headers
             chatInterface.classList.add('active');
 
             const botMessageDiv = document.createElement('div');
