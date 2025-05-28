@@ -16,8 +16,9 @@
             right: 20px;
             z-index: 1000;
             display: none;
-            width: 380px;
-            height: 600px;
+            width: min(90vw, 380px);
+            height: min(80vh, 600px);
+            max-height: calc(100vh - 40px);
             background: var(--chat--color-background);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(133, 79, 255, 0.15);
@@ -222,9 +223,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
+            width: min(60px, 10vw);
+            height: min(60px, 10vw);
+            border-radius: 50%;
             background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-secondary) 100%);
             color: white;
             border: none;
@@ -247,29 +248,183 @@
         }
 
         .n8n-chat-widget .chat-toggle svg {
-            width: 24px;
-            height: 24px;
+            width: min(24px, 4vw);
+            height: min(24px, 4vw);
             fill: currentColor;
         }
 
-        .n8n-chat-widget .chat-footer {
-            padding: 8px;
-            text-align: center;
-            background: var(--chat--color-background);
-            border-top: 1px solid rgba(133, 79, 255, 0.1);
+        /* Media Queries for Responsiveness */
+        @media screen and (max-width: 768px) {
+            .n8n-chat-widget .chat-container {
+                width: 90vw;
+                height: 70vh;
+                max-height: calc(100vh - 60px);
+                bottom: 15px;
+                right: 10px;
+                left: 10px;
+            }
+
+            .n8n-chat-widget .brand-header {
+                padding: 12px;
+            }
+
+            .n8n-chat-widget .brand-header img {
+                width: 24px;
+                height: 24px;
+            }
+
+            .n8n-chat-widget .brand-header span {
+                font-size: 16px;
+            }
+
+            .n8n-chat-widget .close-button {
+                font-size: 18px;
+                padding: 2px;
+            }
+
+            .n8n-chat-widget .new-conversation {
+                padding: 15px;
+                max-width: 85%;
+            }
+
+            .n8n-chat-widget .welcome-text {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .n8n-chat-widget .new-chat-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .n8n-chat-widget .message-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .n8n-chat-widget .response-text {
+                font-size: 12px;
+            }
+
+            .n8n-chat-widget .chat-messages {
+                padding: 15px;
+            }
+
+            .n8n-chat-widget .chat-message {
+                font-size: 13px;
+                padding: 10px 14px;
+                margin: 6px 0;
+            }
+
+            .n8n-chat-widget .chat-input {
+                padding: 12px;
+            }
+
+            .n8n-chat-widget .chat-input textarea {
+                font-size: 13px;
+                padding: 10px;
+            }
+
+            .n8n-chat-widget .chat-input button {
+                padding: 0 16px;
+                font-size: 13px;
+            }
+
+            .n8n-chat-widget .chat-toggle {
+                width: 50px;
+                height: 50px;
+                bottom: 15px;
+            }
+
+            .n8n-chat-widget .chat-toggle svg {
+                width: 20px;
+                height: 20px;
+            }
         }
 
-        .n8n-chat-widget .chat-footer a {
-            color: var(--chat--color-primary);
-            text-decoration: none;
-            font-size: 12px;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-            font-family: inherit;
-        }
+        @media screen and (max-width: 480px) {
+            .n8n-chat-widget .chat-container {
+                width: 95vw;
+                height: 65vh;
+                max-height: calc(100vh - 50px);
+                bottom: 10px;
+            }
 
-        .n8n-chat-widget .chat-footer a:hover {
-            opacity: 1;
+            .n8n-chat-widget .brand-header {
+                padding: 10px;
+            }
+
+            .n8n-chat-widget .brand-header img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .n8n-chat-widget .brand-header span {
+                font-size: 14px;
+            }
+
+            .n8n-chat-widget .close-button {
+                font-size: 16px;
+            }
+
+            .n8n-chat-widget .new-conversation {
+                padding: 10px;
+                max-width: 90%;
+            }
+
+            .n8n-chat-widget .welcome-text {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+
+            .n8n-chat-widget .new-chat-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .n8n-chat-widget .message-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .n8n-chat-widget .response-text {
+                font-size: 11px;
+            }
+
+            .n8n-chat-widget .chat-messages {
+                padding: 10px;
+            }
+
+            .n8n-chat-widget .chat-message {
+                font-size: 12px;
+                padding: 8px 12px;
+                margin: 5px 0;
+            }
+
+            .n8n-chat-widget .chat-input {
+                padding: 10px;
+            }
+
+            .n8n-chat-widget .chat-input textarea {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .n8n-chat-widget .chat-input button {
+                padding: 0 12px;
+                font-size: 12px;
+            }
+
+            .n8n-chat-widget .chat-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 10px;
+            }
+
+            .n8n-chat-widget .chat-toggle svg {
+                width: 18px;
+                height: 18px;
+            }
         }
     `;
 
@@ -328,10 +483,10 @@
     widgetContainer.className = 'n8n-chat-widget';
     
     // Set CSS variables for colors
-    widgetContainer.style.setProperty('--n8n-chat-primary-color', config.style.primaryColor);
-    widgetContainer.style.setProperty('--n8n-chat-secondary-color', config.style.secondaryColor);
-    widgetContainer.style.setProperty('--n8n-chat-background-color', config.style.backgroundColor);
-    widgetContainer.style.setProperty('--n8n-chat-font-color', config.style.fontColor);
+    widgetContainer.style.setProperty('--n8n-chat-primary-color', config.style.primaryColor || defaultConfig.style.primaryColor);
+    widgetContainer.style.setProperty('--n8n-chat-secondary-color', config.style.secondaryColor || defaultConfig.style.secondaryColor);
+    widgetContainer.style.setProperty('--n8n-chat-background-color', config.style.backgroundColor || defaultConfig.style.backgroundColor);
+    widgetContainer.style.setProperty('--n8n-chat-font-color', config.style.fontColor || defaultConfig.style.fontColor);
 
     const chatContainer = document.createElement('div');
     chatContainer.className = `chat-container${config.style.position === 'left' ? ' position-left' : ''}`;
