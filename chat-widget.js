@@ -253,6 +253,43 @@
             fill: currentColor;
         }
 
+        /* Typing Indicator Styles */
+        .n8n-chat-widget .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 12px;
+            max-width: 80%;
+            background: var(--chat--color-background);
+            border: 1px solid rgba(133, 79, 255, 0.2);
+            color: var(--chat--color-font);
+            align-self: flex-start;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .n8n-chat-widget .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background-color: var(--chat--color-primary);
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+
+        .n8n-chat-widget .typing-indicator span:nth-child(2) {
+            animation-delay: -0.2s;
+        }
+
+        .n8n-chat-widget .typing-indicator span:nth-child(3) {
+            animation-delay: -0.4s;
+        }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(1); }
+            40% { transform: scale(1.3); }
+        }
+
         /* Media Queries for Responsiveness */
         @media screen and (max-width: 768px) {
             .n8n-chat-widget .chat-container {
@@ -340,6 +377,16 @@
                 width: 20px;
                 height: 20px;
             }
+
+            .n8n-chat-widget .typing-indicator {
+                padding: 10px 14px;
+                margin: 6px 0;
+            }
+
+            .n8n-chat-widget .typing-indicator span {
+                width: 5px;
+                height: 5px;
+            }
         }
 
         @media screen and (max-width: 480px) {
@@ -424,6 +471,16 @@
             .n8n-chat-widget .chat-toggle svg {
                 width: 18px;
                 height: 18px;
+            }
+
+            .n8n-chat-widget .typing-indicator {
+                padding: 8px 12px;
+                margin: 5px 0;
+            }
+
+            .n8n-chat-widget .typing-indicator span {
+                width: 4px;
+                height: 4px;
             }
         }
     `;
@@ -600,6 +657,13 @@
         messagesContainer.appendChild(userMessageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
+        // Add typing indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'typing-indicator';
+        typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+        messagesContainer.appendChild(typingIndicator);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
         try {
             const response = await fetch(config.webhook.url, {
                 method: 'POST',
@@ -611,6 +675,9 @@
             
             const data = await response.json();
             
+            // Remove typing indicator
+            messagesContainer.removeChild(typingIndicator);
+
             const botMessageDiv = document.createElement('div');
             botMessageDiv.className = 'chat-message bot';
             botMessageDiv.textContent = Array.isArray(data) ? data[0].output : data.output;
@@ -618,6 +685,8 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         } catch (error) {
             console.error('Error:', error);
+            // Remove typing indicator on error
+            messagesContainer.removeChild(typingIndicator);
         }
     }
 
